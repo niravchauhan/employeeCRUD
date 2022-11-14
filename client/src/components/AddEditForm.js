@@ -50,16 +50,17 @@ const AddEditForm = (props) => {
     }
     const onInputChange = (e) => {
         let val = e.target.value, ipKey = e.target.name, errorFlag = false;
-        if (ipKey === 'photo') val = e.target.files[0]
+        val = val.trim()
         if (ipKey === 'dob') val = new Date(val).toLocaleDateString('en-CA')
-        if (["name", "email"].includes(ipKey))
-            errorFlag = val && REGEX[ipKey].test(val) ? true : false;
+        if (name === "" || email === "" || !REGEX["name"].test(name) || !REGEX["email"].test(email))
+            errorFlag = true
+        else errorFlag = false;
 
         setError(errorFlag);
         setNewEmployee({ ...newEmployee, [ipKey]: val });
     }
 
-    const { name, dob, age, email, photo, address, previewImg } = newEmployee;
+    const { name, dob, age, email, address, previewImg } = newEmployee;
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -73,7 +74,7 @@ const AddEditForm = (props) => {
 
                 {/* Name */}
                 <Form.Group>
-                    <Form.Label>Employee Name</Form.Label>
+                    <Form.Label>Employee Name<sup className="error-msg">*</sup></Form.Label>
                     <Form.Control
                         type="text"
                         placeholder="Name *"
@@ -82,11 +83,14 @@ const AddEditForm = (props) => {
                         onChange={(e) => onInputChange(e)}
                         required
                     />
+                    <Form.Text className="text-muted">
+                        Only alphabates and white space allowed.
+                    </Form.Text>
                 </Form.Group>
 
                 {/* email */}
                 <Form.Group>
-                    <Form.Label>Employee Email</Form.Label>
+                    <Form.Label>Employee Email <sup className="error-msg">*</sup></Form.Label>
                     <Form.Control
                         type="email"
                         placeholder="Email *"
@@ -95,6 +99,9 @@ const AddEditForm = (props) => {
                         onChange={(e) => onInputChange(e)}
                         required
                     />
+                    <Form.Text className="text-muted">
+                        Must be a valid Alphabate.
+                    </Form.Text>
                 </Form.Group>
 
                 {/* address */}
@@ -131,6 +138,7 @@ const AddEditForm = (props) => {
                         placeholder="DOB"
                         name="dob"
                         value={dob}
+                        max={new Date().toLocaleDateString('en-CA')}
                         onChange={(e) => onInputChange(e)}
                     />
                 </Form.Group>
@@ -139,7 +147,7 @@ const AddEditForm = (props) => {
                 <Form.Group>
                     <Form.Label>Employee profile</Form.Label>
                     <div className="profil-preview">
-                        {previewImg ? <img src={previewImg} /> : null}
+                        {previewImg ? <img src={previewImg} alt="profile" /> : null}
                         <Form.Control
                             type="file"
                             placeholder="photo"
@@ -152,7 +160,7 @@ const AddEditForm = (props) => {
 
                 {hasError ? <Button variant="success" type="submit" block>
                     {type === "add" ? "Add New Employee" : "Update"}
-                </Button> : <div className="error-msg">Please enter valid details</div>}
+                </Button> : <div className="error-msg">Fields Marked with * is mandatory</div>}
 
             </Form>
         </div >

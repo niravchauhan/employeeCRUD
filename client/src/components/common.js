@@ -51,7 +51,7 @@ export const getFormattedDate = (date) => {
 }
 
 export const REGEX = {
-  "email": /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  "email": /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/,
   "name": /^[a-zA-Z ]*$/
 }
 
