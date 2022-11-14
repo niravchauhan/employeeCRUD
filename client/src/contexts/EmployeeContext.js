@@ -28,7 +28,6 @@ const EmployeeContextProvider = (props) => {
     }
 
     const addEmployee = (employee) => {
-        // const { name, dob, age, email, photo, address } = employees;
         axios.post(`${URL}/addEmployee`, employee).then((resp) => {
             resp = resp.data;
             if (resp.success) {
