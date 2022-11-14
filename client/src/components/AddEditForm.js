@@ -19,11 +19,11 @@ const AddEditForm = (props) => {
         return defaultObj;
     }
 
-    let errorState = type === 'add' ? false : true;
+    // let errorState = type === 'add' ? false : true;
     // Context setup 
-    const { addOrUpdateEmp } = useContext(EmployeeContext);
+    const { addOrUpdateEmp, resultFromAPI } = useContext(EmployeeContext);
     const [newEmployee, setNewEmployee] = useState(getDefaultObj());
-    const [hasError, setError] = useState(errorState);
+    const [hasError, setError] = useState("");
     const [loader, setLoading] = useState(false);
 
     const uploadFile = async (e) => {
@@ -49,15 +49,13 @@ const AddEditForm = (props) => {
         }
     }
     const onInputChange = (e) => {
-        let val = e.target.value, ipKey = e.target.name, errorFlag = false;
-        val = val.trim()
+        let val = e.target.value, ipKey = e.target.name;
+        // val = val.trim()
         if (ipKey === 'dob') val = new Date(val).toLocaleDateString('en-CA')
-        if (name === "" || email === "" || !REGEX["name"].test(name) || !REGEX["email"].test(email))
-            errorFlag = true
-        else errorFlag = false;
-
-        setError(errorFlag);
         setNewEmployee({ ...newEmployee, [ipKey]: val });
+        if (name === "" || email === "" || !REGEX["name"].test(name) || !REGEX["email"].test(email))
+            setError("Field Contains some error");
+        else setError("");
     }
 
     const { name, dob, age, email, address, previewImg } = newEmployee;
@@ -157,11 +155,18 @@ const AddEditForm = (props) => {
                         />
                     </div>
                 </Form.Group>
-
-                {hasError ? <Button variant="success" type="submit" block>
-                    {type === "add" ? "Add New Employee" : "Update"}
-                </Button> : <div className="error-msg">Fields Marked with * is mandatory</div>}
-
+                <div className="error-msg">
+                    {
+                        resultFromAPI && resultFromAPI.success ? "Success" : JSON.stringify(resultFromAPI.error)
+                    }
+                </div>
+                {
+                    !hasError
+                        ? <Button variant="success" type="submit" block>
+                            {type === "add" ? "Add New Employee" : "Update"}
+                        </Button>
+                        : <div className="error-msg">{hasError}</div>
+                }
             </Form>
         </div >
 

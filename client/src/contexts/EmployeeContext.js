@@ -8,6 +8,7 @@ export const EmployeeContext = createContext()
 
 const EmployeeContextProvider = (props) => {
     const [employees, setEmployees] = useState([])
+    const [resultFromAPI, setAPIResult] = useState({})
 
     useEffect(() => {
         axios.get(`${URL}/getallEmployee`).then((resp) => {
@@ -35,18 +36,23 @@ const EmployeeContextProvider = (props) => {
                 employee._id = user._id;
                 setEmployees([...employees, employee])
             }
+            setAPIResult(resp);
         }).catch((err) => {
             console.log(err);
+            setAPIResult(err.response.data);
         });
     }
 
     const deleteEmployee = (_id) => {
         axios.delete(`${URL}/deleteEmployee/${_id}`).then((resp) => {
             resp = resp.data;
-            if (resp.success)
-                setEmployees(employees.filter(employee => employee._id !== _id))
+            if (resp.success) {
+                setEmployees(employees.filter(employee => employee._id !== _id));
+            }
+            setAPIResult(resp);
         }).catch((err) => {
             console.log(err);
+            setAPIResult(err.response.data);
         });
     }
 
@@ -61,7 +67,7 @@ const EmployeeContextProvider = (props) => {
     }
 
     return (
-        <EmployeeContext.Provider value={{ employees, addOrUpdateEmp, addEmployee, deleteEmployee, updateEmployee }}>
+        <EmployeeContext.Provider value={{ employees, resultFromAPI, addOrUpdateEmp, addEmployee, deleteEmployee, updateEmployee }}>
             {props.children}
         </EmployeeContext.Provider>
     )
