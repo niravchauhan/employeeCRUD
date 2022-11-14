@@ -22,6 +22,7 @@ app.all('/', function (req, res) {
 
 app.use('/employee', employeeController);
 
+app.use('/files', express.static(__dirname + '/files'));
 // Start server
 app.listen(PORT, function () {
     console.log('Server running at PORT: ', PORT)
