@@ -16,6 +16,21 @@ body {
 	color: red;
 	word-break: break-word;
 }
+.error-msg-box {
+	color: red;
+    word-break: break-word;
+    margin: 8px 0;
+    border: 1px solid #f5c2c2;
+    padding: 4px;
+    font-size: 11px;
+    background: #fff3f3;
+    border-radius: 5px;
+}
+.positive-msg {     
+	color: #26bc6a;
+    word-break: break-all;
+    margin: 8px 0;
+}
 .ml-1 {
 	margin-left: 4px;
 }
@@ -124,8 +139,14 @@ body {
 }
 .custom-card .profile-img.left img {
 	height: auto;
-	width: 60px;
-	border-radius: 7px;
+    width: 60px;
+    border-radius: 10px;
+    max-height: 60px;
+    object-fit: cover;
+    min-height: 60px;
+}
+.custom-card .profile-img.left {
+    margin: auto;
 }
 .custom-card .right.info {
 	padding-left: 10px;

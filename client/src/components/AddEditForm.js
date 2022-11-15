@@ -155,11 +155,10 @@ const AddEditForm = (props) => {
                         />
                     </div>
                 </Form.Group>
-                <div className="error-msg">
-                    {
-                        resultFromAPI && resultFromAPI.success ? "Success" : JSON.stringify(resultFromAPI.error)
-                    }
-                </div>
+
+                {
+                    resultFromAPI && resultFromAPI.success ? "Success" : (<div className="error-msg-box">{JSON.stringify(resultFromAPI.error)}</div>)
+                }
                 {
                     !hasError
                         ? <Button variant="success" type="submit" block>
@@ -167,7 +166,7 @@ const AddEditForm = (props) => {
                         </Button>
                         : <div className="error-msg">{hasError}</div>
                 }
-            </Form>
+            </Form >
         </div >
 
     )

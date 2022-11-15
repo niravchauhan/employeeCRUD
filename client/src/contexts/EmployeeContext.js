@@ -7,8 +7,8 @@ const URL = defaultURL.employee, FILES_URL = defaultURL.files;
 export const EmployeeContext = createContext()
 
 const EmployeeContextProvider = (props) => {
-    const [employees, setEmployees] = useState([])
-    const [resultFromAPI, setAPIResult] = useState({})
+    const [employees, setEmployees] = useState([]);
+    const [resultFromAPI, setAPIResult] = useState({});
 
     useEffect(() => {
         axios.get(`${URL}/getallEmployee`).then((resp) => {
