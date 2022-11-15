@@ -1,11 +1,11 @@
-require('dotenv').config();
+// require('dotenv').config();
 const dotenv = require('dotenv');
 dotenv.config();
 const morgan = require('morgan');
 const cors = require('cors');
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || "9090";
+const PORT = process.env.PORT || 9090;
 const database = require('./database');
 
 const employeeController = require('./controllers/employee');
