@@ -4,13 +4,15 @@ const { check, validationResult } = require('express-validator')
 const employee = require('../models/employee');
 const multer = require("multer");
 const path = require('path');
-// var dir = "./server/files";
-// if (!path.existsSync(dir)) {
+const fs = require('fs');
+const FILES_URL = process.env.FILE_REPO_URL;
+// var dir = "FILES_URL";
+// if (!fs.existsSync(dir)) {
 //     fs.mkdirSync(dir, 0744);
 // }
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './server/files')
+        cb(null, FILES_URL)
     },
     filename: function (req, file, cb) {
         const fileName = path.basename(file.originalname).split('.').slice(0, -1).join('.') + "_" + Date.now() + path.extname(file.originalname)
