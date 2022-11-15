@@ -60,9 +60,11 @@ const EmployeeContextProvider = (props) => {
         axios.post(`${URL}/updateEmp`, updatedEmployee).then((resp) => {
             resp = resp.data;
             if (resp.success)
-                setEmployees(employees.map((employee) => employee._id === updatedEmployee._id ? updatedEmployee : employee))
+                setEmployees(employees.map((employee) => employee._id === updatedEmployee._id ? updatedEmployee : employee));
+            setAPIResult(resp);
         }).catch((err) => {
             console.log(err);
+            setAPIResult(err.response.data);
         });
     }
 
