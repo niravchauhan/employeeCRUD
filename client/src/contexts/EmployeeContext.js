@@ -9,8 +9,10 @@ export const EmployeeContext = createContext()
 const EmployeeContextProvider = (props) => {
     const [employees, setEmployees] = useState([]);
     const [resultFromAPI, setAPIResult] = useState({});
+    const [loaderEmp, setEmpLoading] = useState(false);
 
     useEffect(() => {
+        setEmpLoading(true);
         axios.get(`${URL}/getallEmployee`).then((resp) => {
             resp = resp.data;
             if (resp.success) {
@@ -19,9 +21,11 @@ const EmployeeContextProvider = (props) => {
                 sortedEmployees.forEach(emp => emp.previewImg = FILES_URL + emp.photo);
                 setEmployees(sortedEmployees);
             }
-        }).catch((err) =>
-            console.log(err)
-        );
+            setEmpLoading(false);
+        }).catch((err) => {
+            console.log(err);
+            setEmpLoading(false);
+        });
     }, [])
 
     const addOrUpdateEmp = (employee, type) => {
@@ -69,7 +73,7 @@ const EmployeeContextProvider = (props) => {
     }
 
     return (
-        <EmployeeContext.Provider value={{ employees, resultFromAPI, addOrUpdateEmp, addEmployee, deleteEmployee, updateEmployee }}>
+        <EmployeeContext.Provider value={{ employees, resultFromAPI, loaderEmp, addOrUpdateEmp, addEmployee, deleteEmployee, updateEmployee }}>
             {props.children}
         </EmployeeContext.Provider>
     )

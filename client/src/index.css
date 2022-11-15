@@ -4,6 +4,10 @@ body {
 	font-family: 'Varela Round', sans-serif;
 	font-size: 13px;
 }
+#root {
+	height: 100vh;
+    width: 100vw;
+}
 .flex-center {
 	display: flex;
 	align-items: center;
@@ -25,6 +29,9 @@ body {
     font-size: 11px;
     background: #fff3f3;
     border-radius: 5px;
+}
+.main-container {
+	height: 100%;
 }
 .positive-msg {     
 	color: #26bc6a;
